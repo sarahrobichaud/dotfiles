@@ -24,6 +24,9 @@ in
     "${self}/features/browser/helium-system.nix"
     "${self}/features/media"
     "${self}/features/dev"
+    "${self}/features/desktop/packages.nix"
+
+    "${modules}/base-packages.nix"
 
     "${modules}/docker.nix"
 
