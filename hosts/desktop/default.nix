@@ -9,6 +9,7 @@ in
 {
   modules = [
     "${self}/hosts/desktop/hardware.nix"
+    "${self}/hosts/desktop/nas.nix"
     "${hardware}/graphics.nix"
 
 
