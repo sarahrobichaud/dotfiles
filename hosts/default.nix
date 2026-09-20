@@ -28,6 +28,7 @@ in
             };
             features.headroom.enable = true;
             hosts.desktop.nvidia = true;
+            dotfiles.secrets.waybarRestartUnits = [ "waybar.service" ];
             features.desktop.hyprland.nvidiaEnv = true;
           })
         ];
