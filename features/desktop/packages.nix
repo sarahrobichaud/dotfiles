@@ -1,18 +1,11 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
-    rofi
-    dunst
-    libnotify
-    grim
-    slurp
-    wl-clipboard
-    pavucontrol
-    obsidian
-    discord
-    signal-desktop
-    protonmail-desktop
-    firefox
+  qt.enable = true;
+
+  environment.systemPackages = [
+    pkgs.nautilus
   ];
+
+  services.gvfs.enable = true;
 }

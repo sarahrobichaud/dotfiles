@@ -33,8 +33,6 @@ in
     "${self}/features/gaming"
 
     "${modules}/nix.nix"
-    "${modules}/software-all.nix"
-    "${modules}/nautilus.nix"
 
     "${self}/features/headroom.nix"
   ];
