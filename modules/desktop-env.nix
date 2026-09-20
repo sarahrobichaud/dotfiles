@@ -1,12 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, config, lib, ... }:
 
+let
+  nvidia = config.features.desktop.hyprland.nvidiaEnv;
+in
 {
   services.gnome.gnome-keyring.enable = true;
 
   services.xserver = {
     autoRepeatDelay = 100;
     autoRepeatInterval = 35;
-    videoDrivers = [ "nvidia" ];
+    videoDrivers = lib.mkIf nvidia [ "nvidia" ];
   };
 
   fonts.packages = with pkgs; [

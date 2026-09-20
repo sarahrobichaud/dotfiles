@@ -20,6 +20,7 @@ in
     "${modules}/users.nix"
 
     "${modules}/hyprland.nix"
+    "${modules}/hyprland-options.nix"
 
     "${self}/features/browser/helium-system.nix"
     "${self}/features/media"
