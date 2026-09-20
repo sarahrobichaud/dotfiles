@@ -1,39 +1,32 @@
 { self, ... }:
 let
-  core = "${self}/modules/system/core";
-  desktop = "${self}/modules/system/desktop";
-  software = "${self}/modules/system/software";
-  virtualisation = "${self}/modules/virtualisation";
-  hardware = "${self}/modules/hardware";
+  modules = "${self}/modules";
 in
 {
   modules = [
     "${self}/hosts/desktop/hardware.nix"
     "${self}/hosts/desktop/nas.nix"
-    "${hardware}/graphics.nix"
+    "${modules}/hardware/graphics.nix"
 
+    "${modules}/locale.nix"
+    "${modules}/audio.nix"
+    "${modules}/network-base.nix"
+    "${modules}/desktop-env.nix"
+    "${modules}/secrets.nix"
 
-    # Temporary before clean up
-    "${core}/temp.nix"
-    "${self}/modules/locale.nix"
-    "${self}/modules/audio.nix"
-    "${self}/modules/network-base.nix"
-    "${self}/modules/desktop-env.nix"
+    "${modules}/boot.nix"
+    "${modules}/networking.nix"
+    "${modules}/bluetooth.nix"
+    "${modules}/users.nix"
+
+    "${modules}/hyprland.nix"
+
+    "${modules}/docker.nix"
+
+    "${modules}/nix.nix"
+    "${modules}/software-all.nix"
+    "${modules}/nautilus.nix"
+
     "${self}/features/headroom.nix"
-    "${self}/modules/secrets.nix"
-
-    "${self}/modules/boot.nix"
-    "${core}/networking.nix"
-    "${self}/modules/bluetooth.nix"
-    "${self}/modules/users.nix"
-
-    "${desktop}/hyprland.nix"
-
-    "${virtualisation}/docker.nix"
-
-    "${self}/modules/nix.nix"
-    "${software}/all.nix"
-    "${software}/nautilus.nix"
-
   ];
 }
