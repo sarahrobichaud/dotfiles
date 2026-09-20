@@ -11,10 +11,6 @@ in
       source = "${SHARED}/waybar";
       recursive = true;
     };
-    # ".config/quickshell" = {
-    #   source = "${SHARED}/quickshell";
-    #   recursive = true;
-    # };
     ".config/hypr/hyprpaper.conf" = {
       source = "${SHARED}/hypr/hyprpaper.conf";
     };
