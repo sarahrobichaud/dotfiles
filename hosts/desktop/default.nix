@@ -15,6 +15,7 @@ in
     # Temporary before clean up
     "${core}/temp.nix"
     "${self}/modules/locale.nix"
+    "${self}/modules/audio.nix"
     "${self}/modules/secrets.nix"
 
     "${self}/modules/boot.nix"
