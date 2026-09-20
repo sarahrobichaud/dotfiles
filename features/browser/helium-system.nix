@@ -1,0 +1,3 @@
+{
+  programs.helium.enable = true;
+}

@@ -6,7 +6,13 @@
   services.xserver = {
     autoRepeatDelay = 100;
     autoRepeatInterval = 35;
+    videoDrivers = [ "nvidia" ];
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    fira-code
+  ];
 
   xdg.portal = {
     enable = true;

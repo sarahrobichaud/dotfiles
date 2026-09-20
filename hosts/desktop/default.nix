@@ -21,6 +21,9 @@ in
 
     "${modules}/hyprland.nix"
 
+    "${self}/features/browser/helium-system.nix"
+    "${self}/features/media/obs.nix"
+
     "${modules}/docker.nix"
 
     "${modules}/nix.nix"
