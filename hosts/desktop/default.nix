@@ -6,7 +6,8 @@ in
   modules = [
     "${self}/hosts/desktop/hardware.nix"
     "${self}/hosts/desktop/nas.nix"
-    "${modules}/hardware/graphics.nix"
+    "${self}/hosts/desktop/nvidia-option.nix"
+    "${self}/hosts/desktop/gpu.nix"
 
     "${modules}/locale.nix"
     "${modules}/audio.nix"

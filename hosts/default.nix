@@ -27,6 +27,7 @@ in
               polarity = "dark";
             };
             features.headroom.enable = true;
+            hosts.desktop.nvidia = true;
             features.desktop.hyprland.nvidiaEnv = true;
           })
         ];
