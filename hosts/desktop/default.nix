@@ -22,7 +22,7 @@ in
     "${modules}/hyprland.nix"
 
     "${self}/features/browser/helium-system.nix"
-    "${self}/features/media/obs.nix"
+    "${self}/features/media"
 
     "${modules}/docker.nix"
 
