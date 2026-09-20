@@ -26,6 +26,8 @@ in
 
     "${modules}/docker.nix"
 
+    "${self}/features/gaming"
+
     "${modules}/nix.nix"
     "${modules}/software-all.nix"
     "${modules}/nautilus.nix"
