@@ -1,0 +1,5 @@
+module quickshell.user
+singleton Theme 1.0 Theme.qml
+singleton Workspaces 1.0 Workspaces.qml
+internal Pill Pill.qml
+internal Workspace Workspace.qml

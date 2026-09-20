@@ -1,0 +1,196 @@
+/* Tropical Wet — floating glass pill bar over deep green
+   Single-color text system: everything is dark green ink on white pills.
+   State changes are conveyed by the pill background, not text color. */
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font", "Fira Code", "Font Awesome 6 Free", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Floating bar: transparent shell with top/bottom margins so the pills
+   appear to hover over the wallpaper. Transparency + blur is handled by
+   Hyprland's decoration.blur. */
+window#waybar {
+  background-color: transparent;
+  color: #0d1f14;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* Tooltip styling — white glass to match the pills */
+tooltip {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+tooltip label {
+  color: #0d1f14;
+  padding: 6px 10px;
+}
+
+/* Shared pill look for every module group.
+   Near-opaque white keeps the dark ink readable over any wallpaper. */
+#workspaces,
+#window,
+#clock,
+#pulseaudio,
+#custom-network-info,
+#custom-openrouter,
+#cpu,
+#memory,
+#battery,
+#tray {
+  background-color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  padding: 0 14px;
+  margin: 0 4px;
+  color: #0d1f14;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Gentle brighten + shadow on hover for interactive pills */
+#workspaces:hover,
+#clock:hover,
+#pulseaudio:hover,
+#custom-network-info:hover,
+#custom-openrouter:hover,
+#cpu:hover,
+#memory:hover,
+#battery:hover {
+  background-color: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Workspaces Module */
+#workspaces {
+  padding: 0 4px;
+}
+
+#workspaces button {
+  padding: 0 12px;
+  margin: 2px 2px;
+  color: rgba(13, 31, 20, 0.65);
+  background-color: transparent;
+  /* Slide-in glass pill: a white gradient sweeping in from the left when the
+     workspace becomes active, reading as a second layer of glass stacked on
+     the module pill. background-size is 300% so the sweep has travel room. */
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.85) 33.3%, transparent 33.3%, transparent 100%);
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  border-radius: 999px;
+  border: none;
+  transition:
+    background-position 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+
+#workspaces button:hover {
+  background-color: rgba(13, 31, 20, 0.12);
+  color: #0d1f14;
+}
+
+#workspaces button.active {
+  background-position: 0% 0;
+  color: #0d1f14;
+  font-weight: 700;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+#workspaces button.urgent {
+  background-color: #0d1f14;
+  color: #ffffff;
+  animation: urgent-pulse 0.8s ease-in-out infinite;
+}
+
+/* Window Title Module */
+#window {
+  font-weight: 500;
+}
+
+#window.empty {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+/* Center Module: Clock */
+#clock {
+  font-weight: 700;
+}
+
+/* Right Modules — all dark green ink; states use pill background tints */
+#pulseaudio.muted {
+  background-color: rgba(13, 31, 20, 0.25);
+}
+
+#custom-openrouter.warning {
+  background-color: rgba(13, 31, 20, 0.15);
+}
+
+#custom-openrouter.critical,
+#custom-openrouter.disconnected {
+  background-color: rgba(13, 31, 20, 0.25);
+}
+
+#battery.warning {
+  background-color: rgba(13, 31, 20, 0.15);
+}
+
+#battery.critical {
+  color: #ffffff;
+  background-color: #0d1f14;
+  animation: critical-blink 0.5s linear infinite alternate;
+}
+
+#battery.charging,
+#battery.plugged {
+  animation-name: none;
+}
+
+/* Tray Module */
+#tray {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#tray > .passive {
+  -gtk-icon-transform: scale(0.85);
+}
+
+#tray > .active {
+  -gtk-icon-transform: scale(1);
+}
+
+#tray > .needs-attention {
+  -gtk-icon-transform: scale(1);
+  background-color: #0d1f14;
+  border-radius: 999px;
+}
+
+/* Animations */
+@keyframes urgent-pulse {
+  from {
+    box-shadow: 0 0 0 0 rgba(13, 31, 20, 0.5);
+  }
+  to {
+    box-shadow: 0 0 0 6px rgba(13, 31, 20, 0);
+  }
+}
+
+@keyframes critical-blink {
+  to {
+    background-color: rgba(13, 31, 20, 0.55);
+  }
+}

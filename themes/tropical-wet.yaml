@@ -1,0 +1,26 @@
+# Tropical Wet — cozy, green, wet, warm, glassy
+# Deep tropical-green base with a white glass foreground layer.
+scheme: "Tropical Wet"
+author: "zyriel"
+
+# --- Backgrounds (deep tropical greens) ---
+base00: "0d1f14"  # Default Background — deep mossy green
+base01: "12291b"  # Lighter Background (status bars)
+base02: "173322"  # Selection Background
+base03: "3d5a47"  # Comments / invisibles / line highlight
+
+# --- Foregrounds (white glass layer) ---
+base04: "6f8f7c"  # Dark Foreground (status bars)
+base05: "e8f0ea"  # Default Foreground — white with green tint
+base06: "f0f6f1"  # Light Foreground
+base07: "ffffff"  # Light Background (tabs / active) — pure white
+
+# --- Accents (warm + wet) ---
+base08: "e06c5f"  # Red — warm coral
+base09: "e8a33d"  # Orange — amber (warmth)
+base0A: "e6c35c"  # Yellow — gold
+base0B: "8fce6a"  # Green — bright tropical leaf
+base0C: "5cc8b0"  # Cyan — wet teal
+base0D: "6aa8d8"  # Blue — tropical sky
+base0E: "b58ad0"  # Purple — soft orchid
+base0F: "9c7a5a"  # Brown — warm bark
