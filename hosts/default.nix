@@ -29,6 +29,9 @@ in
             features.headroom.enable = true;
             hosts.desktop.nvidia = true;
             dotfiles.secrets.waybarRestartUnits = [ "waybar.service" ];
+            features.gaming.enable = true;
+            features.media.enable = true;
+            features.dev.enable = true;
             features.desktop.hyprland.nvidiaEnv = true;
           })
         ];
