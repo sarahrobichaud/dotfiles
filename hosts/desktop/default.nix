@@ -23,6 +23,7 @@ in
 
     "${self}/features/browser/helium-system.nix"
     "${self}/features/media"
+    "${self}/features/dev"
 
     "${modules}/docker.nix"
 
