@@ -26,6 +26,7 @@ in
               base16Scheme = "${self}/themes/tropical-wet.yaml";
               polarity = "dark";
             };
+            features.headroom.enable = true;
           })
         ];
       };

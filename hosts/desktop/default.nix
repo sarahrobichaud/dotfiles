@@ -19,6 +19,7 @@ in
     "${self}/modules/audio.nix"
     "${self}/modules/network-base.nix"
     "${self}/modules/desktop-env.nix"
+    "${self}/features/headroom.nix"
     "${self}/modules/secrets.nix"
 
     "${self}/modules/boot.nix"
