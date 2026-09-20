@@ -22,6 +22,7 @@ in
 
     "${modules}/hyprland.nix"
     "${modules}/hyprland-options.nix"
+    "${modules}/hostname-option.nix"
 
     "${self}/features/browser/helium-system.nix"
     "${self}/features/media"
