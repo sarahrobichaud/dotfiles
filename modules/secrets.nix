@@ -3,7 +3,7 @@
   imports = [ inputs.sops-nix.nixosModules.sops ];
 
   sops = {
-    defaultSopsFile = "${../../..}/secrets.yaml";
+    defaultSopsFile = "${../secrets.yaml}";
     age.keyFile = "/var/lib/sops-nix/key.txt";
 
     secrets."openrouter/key" = {

@@ -3,7 +3,7 @@ let
   core = "${self}/modules/system/core";
   desktop = "${self}/modules/system/desktop";
   software = "${self}/modules/system/software";
-  virtualisation = "${self}/modules/system/virtualisation";
+  virtualisation = "${self}/modules/virtualisation";
   hardware = "${self}/modules/hardware";
 in
 {
@@ -14,18 +14,18 @@ in
 
     # Temporary before clean up
     "${core}/temp.nix"
-    "${core}/secrets.nix"
+    "${self}/modules/secrets.nix"
 
-    "${core}/boot.nix"
+    "${self}/modules/boot.nix"
     "${core}/networking.nix"
-    "${core}/bluetooth.nix"
-    "${core}/users.nix"
+    "${self}/modules/bluetooth.nix"
+    "${self}/modules/users.nix"
 
     "${desktop}/hyprland.nix"
 
     "${virtualisation}/docker.nix"
 
-    "${software}/nixpkgs.nix"
+    "${self}/modules/nix.nix"
     "${software}/all.nix"
     "${software}/nautilus.nix"
 

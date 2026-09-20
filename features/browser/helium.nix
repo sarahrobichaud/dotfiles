@@ -14,5 +14,5 @@
   # Tropical Wet glass theme, loaded as an unpacked extension at launch.
   # Pair with a Hyprland window rule (opacity ~0.93) for the glass effect.
   xdg.dataFile."helium-glass-theme/manifest.json".source =
-    ../../config/shared/browser/helium-glass-theme/manifest.json;
+    ../../home/config/shared/browser/helium-glass-theme/manifest.json;
 }

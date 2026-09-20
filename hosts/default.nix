@@ -1,6 +1,6 @@
 { inputs, self,  ...}:
 let
-  home = import "${self}/home/users";
+  home = import "${self}/home/users";  # TODO: becomes home-manager config entrypoint; features promoted to top-level in restructure
   desktop = import "${self}/hosts/desktop" { inherit self; };
 
   inherit (inputs.nixpkgs.lib) nixosSystem;
