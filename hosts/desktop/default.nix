@@ -17,6 +17,7 @@ in
     "${self}/modules/locale.nix"
     "${self}/modules/audio.nix"
     "${self}/modules/network-base.nix"
+    "${self}/modules/desktop-env.nix"
     "${self}/modules/secrets.nix"
 
     "${self}/modules/boot.nix"
