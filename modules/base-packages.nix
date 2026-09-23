@@ -6,6 +6,7 @@
     tree
     libnatpmp
     gowall
+    gotop
     gparted
     kdePackages.qtdeclarative
   ];

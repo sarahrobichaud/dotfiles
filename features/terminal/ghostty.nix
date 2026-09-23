@@ -5,6 +5,7 @@
     enable = true;
     enableBashIntegration = true;
     settings = {
+      async-backend = "epoll";
       background-blur = false;
       font-family = "JetBrainsMono Nerd Font";
       font-size = 12;
