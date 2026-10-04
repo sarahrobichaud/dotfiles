@@ -17,6 +17,10 @@ in
       neovim
       vim
       git
+      rustc
+      cargo
+      rust-analyzer
+      gcc
       lazygit
       lazydocker
       nodejs
