@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  nvidia = config.features.desktop.hyprland.nvidiaEnv;
+  nvidia = config.hosts.desktop.nvidia;
 in
 {
   services.gnome.gnome-keyring.enable = true;

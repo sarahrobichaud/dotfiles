@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.features.desktop.hyprland;
-  nvidiaEnv = osConfig.features.desktop.hyprland.nvidiaEnv or false;
+  nvidiaEnv = osConfig.hosts.desktop.nvidia or false;
 in
 {
   options.features.desktop.hyprland = {

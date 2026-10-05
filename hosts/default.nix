@@ -32,7 +32,6 @@ in
             features.headroom.enable = true;
             features.media.enable = true;
             features.dev.enable = true;
-            features.desktop.hyprland.nvidiaEnv = true;
           })
         ];
       };
