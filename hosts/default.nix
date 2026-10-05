@@ -48,7 +48,6 @@ in
             hosts.desktop.nvidia = true;
             dotfiles.secrets.waybarRestartUnits = [ "waybar.service" ];
             features.gaming.enable = true;
-            features.headroom.enable = true;
             features.media.enable = true;
             features.dev.enable = true;
           })

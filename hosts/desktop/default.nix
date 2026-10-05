@@ -35,7 +35,5 @@ in
     "${self}/features/gaming"
 
     "${modules}/nix.nix"
-
-    "${self}/features/headroom.nix"
   ];
 }

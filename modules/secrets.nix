@@ -18,15 +18,6 @@
         mode = "0400";
         restartUnits = config.dotfiles.secrets.waybarRestartUnits;
       };
-
-      templates."headroom-env" = {
-        content = ''
-          OPENROUTER_API_KEY=${config.sops.placeholder."openrouter/key"}
-        '';
-        owner = "zyriel";
-        mode = "0400";
-        restartUnits = [ "headroom.service" ];
-      };
     };
   };
 }
