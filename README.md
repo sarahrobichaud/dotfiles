@@ -1,10 +1,10 @@
 # dotfiles
 
-NixOS configuration, built with flake-parts. One host today (`desktop`);
-laptop and WSL hosts planned.
+Only managing my desktop at the moment, will add a laptop and WSL config at some point :p
+
+![desktop](screenshots/desktop.png)
 
 ## Layout
-
 ```
 hosts/      per-machine config (composition, hardware, host-specific bits)
 features/   host-agnostic modules with enable options
