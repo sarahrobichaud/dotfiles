@@ -166,7 +166,7 @@ in
         ];
 
         bind = [
-          { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + L\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"lutris\")") ]; }
+          { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + U\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"lutris\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + G\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"steam\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + V\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"~/.config/waybar/network-menu.sh toggle-wg\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + B\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"helium\")") ]; }
