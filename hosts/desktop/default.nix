@@ -23,7 +23,7 @@ in
     "${modules}/hyprland-system.nix"
     "${modules}/hostname-option.nix"
 
-    "${self}/features/browser/helium-system.nix"
+    "${self}/features/browser"
     "${self}/features/media"
     "${self}/features/dev"
     "${self}/features/desktop"
