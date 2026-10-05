@@ -15,7 +15,26 @@ in
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
-              users.zyriel.imports = home.zyriel;
+              # Monitor geometry is host-specific, so it's injected here at the
+              # host layer (the monitors option lives in the HM module system).
+              users.zyriel.imports = home.zyriel ++ [
+                {
+                  features.desktop.hyprland.monitors = [
+                    {
+                      output = "DP-2";
+                      mode = "3440x1440@143.97";
+                      position = "-900x1080";
+                      scale = "1";
+                    }
+                    {
+                      output = "DP-1";
+                      mode = "1920x1080@143.98";
+                      position = "0x0";
+                      scale = "1";
+                    }
+                  ];
+                }
+              ];
               extraSpecialArgs = { inherit inputs self; };
               backupFileExtension = ".hm-backup";
             };
