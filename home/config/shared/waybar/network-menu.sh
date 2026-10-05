@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-NET_INFO=$(~/.config/waybar/network-info.sh)
-
-PUB_IP=$(echo "$NET_INFO" | grep -oP '"pub_ip":\s*"\K[^"]+')
-PORT=$(echo "$NET_INFO" | grep -oP '"port":\s*"\K[^"]+')
-COUNTRY=$(echo "$NET_INFO" | grep -oP '"country":\s*"\K[^"]+')
+PORT=$(~/.config/waybar/network-info.sh | grep -oP '"port":\s*"\K[^"]+')
 
 ACTION=$1
 
@@ -52,11 +48,9 @@ if [[ -n "$PORT" && "$PORT" != "N/A" ]]; then
 else
     OPT_PORT="🔌  No Forwarded Port Active"
 fi
-OPT_PUB="🌐  Copy Public IP ($PUB_IP)"
-OPT_LOC="📍  Copy Location (${COUNTRY:-N/A} - $PUB_IP)"
 OPT_REFRESH="🔄  Refresh Network Status"
 
-CHOICE=$(printf "%s\n%s\n%s\n%s\n%s" "$OPT_TOGGLE" "$OPT_PORT" "$OPT_PUB" "$OPT_LOC" "$OPT_REFRESH" | rofi -dmenu \
+CHOICE=$(printf "%s\n%s\n%s" "$OPT_TOGGLE" "$OPT_PORT" "$OPT_REFRESH" | rofi -dmenu \
     -p "⚡ NETWORK & VPN MANAGER" \
     -theme-str '
       window {
@@ -80,7 +74,7 @@ CHOICE=$(printf "%s\n%s\n%s\n%s\n%s" "$OPT_TOGGLE" "$OPT_PORT" "$OPT_PUB" "$OPT_
         font: "JetBrainsMono Nerd Font Bold 11";
       }
       listview {
-        lines: 5;
+        lines: 3;
         background-color: transparent;
         spacing: 6px;
       }
@@ -109,18 +103,6 @@ case "$CHOICE" in
         if [[ -n "$PORT" && "$PORT" != "N/A" ]]; then
             echo -n "$PORT" | wl-copy
             notify -u normal -a "Network" "⚡ PORT COPIED" "VPN Port $PORT copied to clipboard!"
-        fi
-        ;;
-    *"Copy Public IP"*)
-        if [[ -n "$PUB_IP" && "$PUB_IP" != "N/A" && "$PUB_IP" != "Offline" && "$PUB_IP" != "Connecting..." ]]; then
-            echo -n "$PUB_IP" | wl-copy
-            notify -u normal -a "Network" "🌐 IP COPIED" "Public IP $PUB_IP copied to clipboard!"
-        fi
-        ;;
-    *"Copy Location"*)
-        if [[ -n "$COUNTRY" || -n "$PUB_IP" ]]; then
-            echo -n "${COUNTRY:-Unknown} ($PUB_IP)" | wl-copy
-            notify -u normal -a "Network" "📍 LOCATION COPIED" "${COUNTRY:-Unknown} ($PUB_IP) copied to clipboard!"
         fi
         ;;
     *"Refresh Network Status"*)
