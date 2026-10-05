@@ -28,7 +28,6 @@ in
     "${self}/features/media"
     "${self}/features/dev"
     "${self}/features/desktop"
-    "${self}/features/ai"
 
     "${modules}/base-packages.nix"
 
