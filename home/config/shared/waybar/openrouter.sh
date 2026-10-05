@@ -21,9 +21,9 @@ JSON_KEY=$(curl -sf --max-time 10 https://openrouter.ai/api/v1/key \
   exit 0
 }
 
-TOTAL=$(echo "$JSON_CREDITS" | grep -o '"total_credits":[[:space:]]*[0-9.]*' | grep -o '[0-9.]*$')
-USED=$(echo "$JSON_CREDITS" | grep -o '"total_usage":[[:space:]]*[0-9.]*' | grep -o '[0-9.]*$')
-MONTHLY=$(echo "$JSON_KEY" | grep -o '"usage_monthly":[[:space:]]*[0-9.]*' | grep -o '[0-9.]*$')
+TOTAL=$(jq -r '.data.total_credits // .total_credits // empty' <<<"$JSON_CREDITS")
+USED=$(jq -r '.data.total_usage // .total_usage // empty' <<<"$JSON_CREDITS")
+MONTHLY=$(jq -r '.data.usage_monthly // .usage_monthly // empty' <<<"$JSON_KEY")
 
 [ -n "$TOTAL" ] && [ -n "$USED" ] && [ -n "$MONTHLY" ] || {
   echo '{"text": "󰚩", "class": "disconnected", "tooltip": "Unexpected OpenRouter API response"}'
