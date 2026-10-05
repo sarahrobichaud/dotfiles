@@ -20,7 +20,7 @@ in
     "${modules}/bluetooth.nix"
     "${modules}/users.nix"
 
-    "${modules}/hyprland.nix"
+    "${modules}/hyprland-system.nix"
     "${modules}/hostname-option.nix"
 
     "${self}/features/browser/helium-system.nix"
