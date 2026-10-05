@@ -12,11 +12,11 @@ in
     "${modules}/locale.nix"
     "${modules}/audio.nix"
     "${modules}/network-base.nix"
+    "${self}/hosts/desktop/networking.nix"
     "${modules}/desktop-env.nix"
     "${modules}/secrets.nix"
 
     "${modules}/boot.nix"
-    "${modules}/networking.nix"
     "${modules}/bluetooth.nix"
     "${modules}/users.nix"
 

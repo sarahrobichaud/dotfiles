@@ -15,9 +15,6 @@ let
   '';
 in
 {
-
-  services.resolved.enable = true;
-
   security.polkit.extraConfig = ''
     polkit.addRule(function(action, subject) {
       if (action.id == "org.freedesktop.systemd1.manage-units" &&
@@ -95,24 +92,21 @@ in
     restartUnits = [ "wg-quick-wg0.service" ];
   };
 
-
   systemd.services.wg-quick-wg0 = {
     after = [ "tailscaled.service" ];
     wants = [ "tailscaled.service" ];
   };
 
-  services.tailscale = {
-  	enable = true;
-  };
+  services.tailscale.enable = true;
 
   systemd.services.reset-ethernet-r8169 = {
-  	description = "Reset ethernet on wake from sleep";
-  	wantedBy = [ "post-resume.target" ];
-  	after = [ "post-resume.target" ];
-  	script = ''
-  	/run/current-system/sw/bin/modprobe -r r8169
-  	/run/current-system/sw/bin/modprobe -i r8169
-  	/run/current-system/sw/bin/systemctl restart NetworkManager
-  	'';
+    description = "Reset ethernet on wake from sleep";
+    wantedBy = [ "post-resume.target" ];
+    after = [ "post-resume.target" ];
+    script = ''
+      /run/current-system/sw/bin/modprobe -r r8169
+      /run/current-system/sw/bin/modprobe -i r8169
+      /run/current-system/sw/bin/systemctl restart NetworkManager
+    '';
   };
 }
