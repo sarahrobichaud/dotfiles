@@ -233,7 +233,7 @@ in
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + C\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"zeditor ~/dotfiles\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + M\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"proton-mail\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + E\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"nautilus\")") ]; }
-          { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + EQUAL\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"slurp | grim -g - - | wl-copy\")") ]; }
+          { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + EQUAL\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"mkdir -p ~/Pictures/screenshots && f=~/Pictures/screenshots/$(date +%Y%m%d-%H%M%S).png && slurp | grim -g - $f && wl-copy < $f\")") ]; }
         ];
 
         workspace_rule = [
