@@ -1,6 +1,6 @@
 { inputs, self,  ...}:
 let
-  home = import "${self}/home/users";  # TODO: becomes home-manager config entrypoint; features promoted to top-level in restructure
+  home = import "${self}/home/users";
   desktop = import "${self}/hosts/desktop" { inherit self; };
 
   inherit (inputs.nixpkgs.lib) nixosSystem;
@@ -47,7 +47,6 @@ in
           pkgs.kdePackages.qtdeclarative
         ];
         shellHook = ''
-          # Required for qmlls to find the correct type declarations
           export QMLLS_BUILD_DIRS=${pkgs.kdePackages.qtdeclarative}/lib/qt-6/qml/:${pkgs.quickshell}/lib/qt-6/qml/
           export QML_IMPORT_PATH=$PWD/src
         '';

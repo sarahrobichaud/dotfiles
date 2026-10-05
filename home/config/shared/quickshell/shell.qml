@@ -18,7 +18,6 @@ Scope {
             required property var modelData
 
             readonly property string monitorName: modelData.name
-            // fixed workspace list for this monitor - never changes
             readonly property var wsIds: Workspaces.idsForMonitor(monitorName)
 
             screen:  modelData
@@ -40,9 +39,6 @@ Scope {
                 Layout.alignment: Qt.AlignVCenter
                 spacing: 10
 
-                // --- monitor indicator --------------------------------------
-                // shows which monitor this bar belongs to; highlighted when
-                // the monitor is focused
                 Pill {
                     id: monitorPill
 
@@ -71,7 +67,6 @@ Scope {
                     }
                 }
 
-                // --- workspaces ---------------------------------------------
                 Pill {
                     id: wsPill
 
@@ -94,11 +89,6 @@ Scope {
                         }
                     }
 
-                    // --- shared sliding highlight ------------------------------
-                    // One glass pill that glides from the previously active
-                    // workspace to the newly active one. The model is static,
-                    // so delegates are stable - the only dynamic input is
-                    // which index is active.
                     Rectangle {
                         id: slider
                         parent: wsPill.highlight
@@ -107,7 +97,6 @@ Scope {
                         border.color: Theme.glassRing
                         border.width: 1
 
-                        // bright top edge, the glass inset highlight
                         Rectangle {
                             anchors {
                                 left: parent.left
@@ -121,8 +110,6 @@ Scope {
                             color: Theme.glassEdge
                         }
 
-                        // index of the workspace active on this monitor;
-                        // -1 if none
                         readonly property int activeIndex: {
                             void wsIds.length
                             let idx = -1
@@ -176,7 +163,6 @@ Scope {
         running: true
 
         stdout: StdioCollector {
-          // update the property instead of the clock directly
           onStreamFinished: root.time = this.text.trim()
         }
       }

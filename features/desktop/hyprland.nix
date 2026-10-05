@@ -6,7 +6,6 @@
 }:
 let
   cfg = config.features.desktop.hyprland;
-  # Host-level NVIDIA flag, set by the NixOS config (see modules/hyprland-options.nix)
   nvidiaEnv = osConfig.features.desktop.hyprland.nvidiaEnv or false;
 in
 {
@@ -26,12 +25,10 @@ in
       configType = "lua";
 
       settings = {
-        # local mainMod = "SUPER"
         mod = {
           _var = "SUPER";
         };
 
-        # --------------------- ENVIRONMENT VARIABLES ---------------------
         env =
           lib.optionals nvidiaEnv [
             { _args = [ "LIBVA_DRIVER_NAME" "nvidia" ]; }
@@ -44,7 +41,6 @@ in
             { _args = [ "HYPRCURSOR_THEME" "Nordzy-hyprcursors" ]; }
           ];
 
-        # Runs on Hyprland start and on config reload
         on = [
           {
             _args = [
@@ -68,15 +64,8 @@ in
           }
         ];
 
-        # ----------------------------- MONITORS -----------------------------
         monitor = cfg.monitors;
 
-        # --------------------------- LOOK AND FEEL ---------------------------
-        # NOTE: must be an attrset (not a list) so it merges with the definition
-        # from Stylix, which owns most colors here (shadow, group, background).
-        # We override the active border to white with mkForce so it wins over
-        # Stylix's default (base0D blue). Don't set `shadow.color` or
-        # `misc.background_color` in this file.
         config = {
           cursor = {
             no_hardware_cursors = false;
@@ -116,7 +105,6 @@ in
             resize_on_border = true;
             allow_tearing = true;
             layout = "master";
-            # White active border (overrides Stylix's base0D blue)
             "col.active_border" = lib.mkForce "rgb(ffffff)";
           };
 
@@ -141,8 +129,6 @@ in
           };
         };
 
-        # ----------------------------- INPUT -----------------------------
-
         device = [
           {
             name = "epic-mouse-v1";
@@ -150,8 +136,6 @@ in
           }
         ];
 
-        # --------------------------- ANIMATIONS ---------------------------
-        # Smooth, refined curves with zero overshooting/spring bounce
         curve = [
           { _args = [ "easeOutQuart" { type = "bezier"; points = [ [ 0.25 1.0 ] [ 0.5 1.0 ] ]; } ]; }
           { _args = [ "easeOutQuint" { type = "bezier"; points = [ [ 0.23 1.0 ] [ 0.32 1.0 ] ]; } ]; }
@@ -181,12 +165,11 @@ in
           { leaf = "zoomFactor"; enabled = true; speed = 3.0; bezier = "easeOutQuart"; }
         ];
 
-        # --------------------------- KEYBINDINGS ---------------------------
         bind = [
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + L\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"lutris\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + G\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"steam\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + V\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"~/.config/waybar/network-menu.sh toggle-wg\")") ]; }
-          { _args = [ (lib.mkLuaInline "mod .. \" + B\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"helium --load-extension=$HOME/.local/share/helium-glass-theme\")") ]; }
+          { _args = [ (lib.mkLuaInline "mod .. \" + B\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"helium\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + RETURN\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"ghostty\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + N\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"obsidian\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + N\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"nicotine\")") ]; }
@@ -207,7 +190,6 @@ in
           { _args = [ (lib.mkLuaInline "mod .. \" + F\"") (lib.mkLuaInline "hl.dsp.window.fullscreen({ mode = 'maximized', action = 'toggle' })") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + F\"") (lib.mkLuaInline "hl.dsp.window.fullscreen({ mode = 'fullscreen', action = 'toggle' })") ]; }
 
-          # Switch workspaces with mod + [0-9], move window with mod + SHIFT + [0-9]
           { _args = [ (lib.mkLuaInline "mod .. \" + 1\"") (lib.mkLuaInline "hl.dsp.focus({ workspace = 1 })") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + 1\"") (lib.mkLuaInline "hl.dsp.window.move({ workspace = 1 })") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + 2\"") (lib.mkLuaInline "hl.dsp.focus({ workspace = 2 })") ]; }
@@ -229,27 +211,22 @@ in
           { _args = [ (lib.mkLuaInline "mod .. \" + 0\"") (lib.mkLuaInline "hl.dsp.focus({ workspace = 10 })") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + 0\"") (lib.mkLuaInline "hl.dsp.window.move({ workspace = 10 })") ]; }
 
-          # Mouse drag / resize
           { _args = [ (lib.mkLuaInline "mod .. \" + mouse:272\"") (lib.mkLuaInline "hl.dsp.window.drag()") { mouse = true; } ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + mouse:273\"") (lib.mkLuaInline "hl.dsp.window.resize()") { mouse = true; } ]; }
 
-          # Swap monitors
           { _args = [ (lib.mkLuaInline "mod .. \" + S\"") (lib.mkLuaInline "hl.dsp.workspace.swap_monitors({ monitor1 = \"DP-1\", monitor2 = \"DP-2\" })") ]; }
 
-          # Volume / brightness (locked + repeating)
           { _args = [ "XF86AudioRaiseVolume" (lib.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+\")") { locked = true; repeating = true; } ]; }
           { _args = [ "XF86AudioLowerVolume" (lib.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-\")") { locked = true; repeating = true; } ]; }
           { _args = [ "XF86AudioMute" (lib.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle\")") { locked = true; repeating = true; } ]; }
           { _args = [ "XF86AudioMicMute" (lib.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle\")") { locked = true; repeating = true; } ]; }
           { _args = [ "XF86MonBrightnessDown" (lib.mkLuaInline "hl.dsp.exec_cmd(\"brightnessctl -e4 -n2 set 5%-\")") { locked = true; repeating = true; } ]; }
 
-          # Media keys (locked)
           { _args = [ "XF86AudioNext" (lib.mkLuaInline "hl.dsp.exec_cmd(\"playerctl next\")") { locked = true; } ]; }
           { _args = [ "XF86AudioPause" (lib.mkLuaInline "hl.dsp.exec_cmd(\"playerctl play-pause\")") { locked = true; } ]; }
           { _args = [ "XF86AudioPlay" (lib.mkLuaInline "hl.dsp.exec_cmd(\"playerctl play-pause\")") { locked = true; } ]; }
           { _args = [ "XF86AudioPrev" (lib.mkLuaInline "hl.dsp.exec_cmd(\"playerctl previous\")") { locked = true; } ]; }
 
-          # Misc
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + R\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"~/.config/waybar/launch.sh\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + T\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"tableplus\")") ]; }
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + B\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"bruno\")") ]; }
@@ -259,7 +236,6 @@ in
           { _args = [ (lib.mkLuaInline "mod .. \" + SHIFT + EQUAL\"") (lib.mkLuaInline "hl.dsp.exec_cmd(\"slurp | grim -g - - | wl-copy\")") ]; }
         ];
 
-        # --------------------------- WORKSPACE RULES ---------------------------
         workspace_rule = [
           { workspace = "1"; monitor = "DP-2"; layout = "master"; }
           { workspace = "2"; monitor = "DP-2"; layout = "master"; }
@@ -273,7 +249,6 @@ in
           { workspace = "10"; monitor = "DP-1"; layout = "master"; }
         ];
 
-        # --------------------------- WINDOW RULES ---------------------------
         window_rule = [
           {
             name = "suppress-maximize-events";

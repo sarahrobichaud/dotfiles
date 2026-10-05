@@ -18,18 +18,15 @@
   };
 
   xdg.configFile."ghostty/shaders/blaze.glsl".text = ''
-    // sRGB -> Linear conversion (needed because Ghostty passes sRGB values but the shader pipeline operates in linear color space)
     vec3 sRGBToLinear(vec3 c) {
         return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
     }
 
-    // --- CONFIGURATION ---
-    vec4 TRAIL_COLOR = vec4(sRGBToLinear(iCurrentCursorColor.rgb), iCurrentCursorColor.a); // for custom color: vec4(0.2, 0.6, 1.0, 0.5); (wrap in sRGBToLinear for correct brightness)
-    const float DURATION = 0.2; // in seconds
+    vec4 TRAIL_COLOR = vec4(sRGBToLinear(iCurrentCursorColor.rgb), iCurrentCursorColor.a);
+    const float DURATION = 0.2;
     const float TRAIL_LENGTH = 0.5;
-    const float BLUR = 2.0; // blur size in pixels (for antialiasing)
+    const float BLUR = 2.0;
 
-    // --- CONSTANTS for easing functions ---
     const float PI = 3.14159265359;
     const float C1_BACK = 1.70158;
     const float C2_BACK = C1_BACK * 1.525;
@@ -39,77 +36,15 @@
     const float SPRING_STIFFNESS = 9.0;
     const float SPRING_DAMPING = 0.9;
 
-    // --- EASING FUNCTIONS ---
-
-    // // Linear
-    // float ease(float x) {
-    //     return x;
-    // }
-
-    // // EaseOutQuad
-    // float ease(float x) {
-    //     return 1.0 - (1.0 - x) * (1.0 - x);
-    // }
-
-    // EaseOutCubic
     float ease(float x) {
         return 1.0 - pow(1.0 - x, 3.0);
     }
-
-    // // EaseOutQuart
-    // float ease(float x) {
-    //     return 1.0 - pow(1.0 - x, 4.0);
-    // }
-
-    // // EaseOutQuint
-    // float ease(float x) {
-    //     return 1.0 - pow(1.0 - x, 5.0);
-    // }
-
-    // EaseOutSine
-    // float ease(float x) {
-    //     return sin((x * PI) / 2.0);
-    // }
-
-    // // EaseOutExpo
-    // float ease(float x) {
-    //     return x == 1.0 ? 1.0 : 1.0 - pow(2.0, -10.0 * x);
-    // }
-
-    // // EaseOutCirc
-    // float ease(float x) {
-    //     return sqrt(1.0 - pow(x - 1.0, 2.0));
-    // }
-
-    // // EaseOutBack
-    // float ease(float x) {
-    //     return 1.0 + C3_BACK * pow(x - 1.0, 3.0) + C1_BACK * pow(x - 1.0, 2.0);
-    // }
-
-    // // EaseOutElastic
-    // float ease(float x) {
-    //     return x == 0.0 ? 0.0
-    //          : x == 1.0 ? 1.0
-    //                     : pow(2.0, -10.0 * x) * sin((x * 10.0 - 0.75) * C4_ELASTIC) + 1.0;
-    // }
-
-    // Parametric Spring
-    // float ease(float x) {
-    //     x = clamp(x, 0.0, 1.0);
-    //     float decay = exp(-SPRING_DAMPING * SPRING_STIFFNESS * x);
-    //     float freq = sqrt(SPRING_STIFFNESS * (1.0 - SPRING_DAMPING * SPRING_DAMPING));
-    //     float osc = cos(freq * 6.283185 * x) + (SPRING_DAMPING * sqrt(SPRING_STIFFNESS) / freq) * sin(freq * 6.283185 * x);
-    //     return 1.0 - decay * osc;
-    // }
 
     float getSdfRectangle(in vec2 point, in vec2 center, in vec2 halfSize)
     {
         vec2 d = abs(point - center) - halfSize;
         return length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
     }
-
-    // Based on Inigo Quilez's 2D distance functions article: https://iquilezles.org/articles/distfunctions2d/
-    // Potencially optimized by eliminating conditionals and loops to enhance performance and reduce branching
 
     float seg(in vec2 p, in vec2 a, in vec2 b, inout float s, float d) {
         vec2 e = b - a;
@@ -149,10 +84,9 @@
     }
 
     float getTopVertexFlag(vec2 a, vec2 b) {
-        float condition1 = step(b.x, a.x) * step(a.y, b.y); // a.x < b.x && a.y > b.y
-        float condition2 = step(a.x, b.x) * step(b.y, a.y); // a.x > b.x && a.y < b.y
+        float condition1 = step(b.x, a.x) * step(a.y, b.y);
+        float condition2 = step(a.x, b.x) * step(b.y, a.y);
 
-        // if neither condition is met, return 1 (else case)
         return 1.0 - max(condition1, condition2);
     }
 
@@ -166,7 +100,6 @@
         fragColor = texture(iChannel0, fragCoord.xy / iResolution.xy);
         #endif
 
-        // normalization & setup(-1, 1 coords)
         vec2 vu = normalize(fragCoord, 1.);
         vec2 offsetFactor = vec2(-.5, 0.5);
 
@@ -185,17 +118,14 @@
          float minDist = currentCursor.w * 1.5;
          float progress = clamp((iTime - iTimeCursorChange) / DURATION, 0.0, 1.0);
          if (lineLength > minDist) {
-             // --- Animation Logic ---
              float shrinkFactor = ease(progress);
 
-            // detect straight moves
-            vec2 delta = abs(centerCC - centerCP);
+             vec2 delta = abs(centerCC - centerCP);
             float threshold = 0.001;
             float isHorizontal = step(delta.y, threshold);
             float isVertical = step(delta.x, threshold);
             float isStraightMove = max(isHorizontal, isVertical);
 
-            // -- Making parallelogram sdf (diagonal moves) ---
             float topVertexFlag = getTopVertexFlag(currentCursor.xy, previousCursor.xy);
             float bottomVertexFlag = 1.0 - topVertexFlag;
             vec2 v0 = vec2(currentCursor.x + currentCursor.z * topVertexFlag, currentCursor.y - currentCursor.w);
@@ -210,7 +140,6 @@
 
             float sdfTrail_diag = getSdfParallelogram(vu, v0, v1, v2_anim, v3_anim);
 
-            // --- Making rectangle sdf (straight moves) ---
             vec2 min_center = min(centerCP, centerCC);
             vec2 max_center = max(centerCP, centerCC);
 
@@ -225,14 +154,12 @@
 
             float sdfTrail_rect = getSdfRectangle(vu, animCenter, animSize * 0.5);
 
-            // -- Selecting and drawing the trail sdf --
             float sdfTrail = mix(sdfTrail_diag, sdfTrail_rect, isStraightMove);
 
             vec4 trail = TRAIL_COLOR;
             float trailAlpha = antialising(sdfTrail);
             newColor = mix(newColor, trail, trailAlpha);
 
-            // Punch hole
             newColor = mix(newColor, fragColor, step(sdfCurrentCursor, 0.));
         }
 
