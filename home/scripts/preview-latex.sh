@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ]; then
-    echo "Usage: preview-latext <file.tex>"
+    echo "Usage: preview-latex <file.tex>"
     exit 1
 fi
 
@@ -14,14 +14,15 @@ if [ ! -f "$tex_file" ]; then
     exit 1
 fi
 
-if [ -f "$pdf_file" ]; then
-    echo "Opening $pdf_file in Zathura..."
-    zathura "$pdf_file" >/dev/null 2>&1 &
-else
+# Compile once up front so a fresh .tex produces its PDF before the watcher
+# starts (previously the script errored out before ever compiling).
+latexmk -xelatex -interaction=nonstopmode "$tex_file" || {
     echo "Error: PDF compilation failed."
     exit 1
-fi
+}
+
+echo "Opening $pdf_file in Zathura..."
+zathura "$pdf_file" >/dev/null 2>&1 &
 
 echo "Starting continuous watch mode (Press Ctrl+C to stop)..."
-
 latexmk -xelatex -pvc -interaction=nonstopmode "$tex_file"
