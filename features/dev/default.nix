@@ -29,7 +29,7 @@ in
       nixd
       bruno
       tableplus
-      texliveMedium
+      texliveFull
       zathura
       appimage-run
     ];
