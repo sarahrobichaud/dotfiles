@@ -14,4 +14,10 @@ in
     ../../features/browser/helium.nix
     ../../features/desktop/hyprland.nix
   ];
+
+  # Headless WSL: no desktop/browser/terminal-emulator config.
+  wsl = [
+    ../default.nix
+    ../../features/shell/bash.nix
+  ];
 }

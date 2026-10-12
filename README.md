@@ -1,6 +1,6 @@
 # dotfiles
 
-Only managing my desktop at the moment, will add a laptop and WSL config at some point :p
+Manages my desktop and a slim WSL host profile, will add a laptop at some point :p
 
 ![desktop](screenshots/desktop.png)
 

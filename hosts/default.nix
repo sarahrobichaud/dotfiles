@@ -2,6 +2,7 @@
 let
   home = import "${self}/home/users";
   desktop = import "${self}/hosts/desktop" { inherit self; };
+  wsl = import "${self}/hosts/wsl" { inherit self; };
 
   inherit (inputs.nixpkgs.lib) nixosSystem;
 in
@@ -50,6 +51,26 @@ in
             features.gaming.enable = true;
             features.media.enable = true;
             features.dev.enable = true;
+          })
+        ];
+      };
+
+      wsl = nixosSystem {
+        specialArgs = { inherit inputs self; };
+        modules = wsl.modules ++ [
+          inputs.nixos-wsl.nixosModules.default
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              users.zyriel.imports = home.wsl;
+              extraSpecialArgs = { inherit inputs self; };
+              backupFileExtension = ".hm-backup";
+            };
+          }
+          ({ ... }: {
+            dotfiles.hostName = "wsl";
+            features.dev.enable = true;
+            features.dev.light = true;
           })
         ];
       };

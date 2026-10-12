@@ -22,6 +22,10 @@
 			url = "github:Mic92/sops-nix";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		nixos-wsl = {
+			url = "github:nix-community/NixOS-WSL";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
 	outputs = inputs @ { flake-parts, ... }:
