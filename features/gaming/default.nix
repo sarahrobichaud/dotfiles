@@ -29,6 +29,7 @@ in
     };
 
     environment.systemPackages = with pkgs; [
+      linuxConsoleTools
       lutris
       mangohud
       protonup-ng
