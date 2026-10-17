@@ -9,14 +9,16 @@
 #   <theme>/<name>-i.<ext> inverted copy per theme
 #
 # Usage:
-#   themify.sh -dir ./my-dirs
+#   themify.sh [-dir ./my-dirs]
 #
 # Options:
-#   -dir <path>    Directory containing the source wallpapers (required)
-#   -out <path>    Output directory (default: ./themify)
+#   -dir <path>    Directory containing the source wallpapers
+#                  (default: ~/Pictures/wallpapers/landscape/source)
+#   -out <path>    Output directory (default: ~/Pictures/wallpapers/landscape/themify)
 #   -fmt <ext>     Normalize every output to this format: png|jpeg|jpg|webp|avif
 #   -config <path> Path to the gowall config.yml (default: ~/.config/gowall/config.yml)
 #   -base16 <path> Path to a base16 YAML scheme to add as an extra theme
+#                  (default: ~/dotfiles/themes/earthen-web.yaml)
 #   -keep          Keep intermediate grayscale files (they are deleted by default)
 #
 # Requires: gowall
@@ -24,21 +26,23 @@
 set -u
 
 CONFIG_PATH="${GOWALL_CONFIG:-$HOME/.config/gowall/config.yml}"
-OUT_DIR=""
-SRC_DIR=""
+SRC_DIR="${GOWALL_SRC:-$HOME/Pictures/wallpapers/landscape/source}"
+OUT_DIR="${GOWALL_OUT:-$HOME/Pictures/wallpapers/landscape/themify}"
 FMT=""
-BASE16=""
+BASE16="${GOWALL_BASE16:-$HOME/dotfiles/themes/earthen-web.yaml}"
 KEEP=0
 
 usage() {
   cat <<'EOF'
-Usage: themify.sh <dir> [-out <dir>] [-fmt <ext>] [-config <path>] [-base16 <path>] [-keep]
+Usage: themify.sh [-dir <dir>] [-out <dir>] [-fmt <ext>] [-config <path>] [-base16 <path>] [-keep]
 
-  -dir <dir>    Directory containing source wallpapers (required)
-  -out <dir>    Output directory (default: ./themify)
+  -dir <dir>    Directory containing source wallpapers
+                (default: ~/Pictures/wallpapers/landscape/source)
+  -out <dir>    Output directory (default: ~/Pictures/wallpapers/landscape/themify)
   -fmt <ext>    Normalize output format: png, jpeg, jpg, webp, avif
   -config <path> Path to gowall config.yml (default: ~/.config/gowall/config.yml)
   -base16 <path> Path to a base16 YAML scheme to add as an extra theme
+                (default: ~/dotfiles/themes/earthen-web.yaml)
   -keep         Keep intermediate grayscale/inverted files
 EOF
   exit 1
@@ -57,10 +61,6 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "$SRC_DIR" ]]; then
-  echo "ERROR: -dir is required" >&2
-  usage
-fi
 if [[ ! -d "$SRC_DIR" ]]; then
   echo "ERROR: directory '$SRC_DIR' does not exist" >&2
   exit 1
@@ -73,6 +73,8 @@ if [[ -n "$BASE16" && ! -f "$BASE16" ]]; then
   echo "ERROR: base16 scheme '$BASE16' not found" >&2
   exit 1
 fi
+
+OUT_DIR="${OUT_DIR:-themify}"
 
 OUT_DIR="${OUT_DIR:-themify}"
 mkdir -p "$OUT_DIR"
@@ -96,7 +98,7 @@ if [[ -n "$BASE16" ]]; then
   BASE16_NAME=$(grep -E '^scheme:' "$BASE16" \
     | sed -E 's/^scheme:[[:space:]]*["\'']?([^"\'']*)["\'']?.*/\1/' \
     | tr '[:upper:]' '[:lower:]' | tr ' ' '-')
-  BASE16_NAME="${BASE16_NAME:-tropical-wet}"
+  BASE16_NAME="${BASE16_NAME:-earthen-web}"
 
   BASE16_JSON="$(mktemp "${TMPDIR:-/tmp}/${BASE16_NAME}.XXXXXX.json")"
   colors=""

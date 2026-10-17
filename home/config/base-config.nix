@@ -1,5 +1,6 @@
 let
   SHARED = ./shared;
+  THEMES = ../../themes;
 in
 {
   home.file = {
@@ -13,6 +14,10 @@ in
     };
     ".config/hypr/hyprpaper.conf" = {
       source = "${SHARED}/hypr/hyprpaper.conf";
+    };
+    ".config/zed/themes" = {
+      source = "${THEMES}/zed";
+      recursive = true;
     };
   };
 }

@@ -43,7 +43,7 @@ in
           ({ ... }: {
             stylix = {
               enable = true;
-              base16Scheme = "${self}/themes/tropical-wet.yaml";
+              base16Scheme = "${self}/themes/earthen-web.yaml";
               polarity = "dark";
             };
             hosts.desktop.nvidia = true;

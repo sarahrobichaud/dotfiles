@@ -1,0 +1,26 @@
+# Earthen Web — earthy, warm, dusty blue, white glass
+# Deep loam base with warm earth accents, blue sky tints, and a white glass foreground layer.
+scheme: "Earthen Web"
+author: "zyriel"
+
+# --- Backgrounds (deep loam browns) ---
+base00: "1b1812"  # Default Background — deep loam
+base01: "241f16"  # Lighter Background (status bars)
+base02: "2e281c"  # Selection Background
+base03: "5c5342"  # Comments / invisibles / line highlight
+
+# --- Foregrounds (white glass layer) ---
+base04: "8c8170"  # Dark Foreground (status bars)
+base05: "f2ede3"  # Default Foreground — warm white
+base06: "f8f4ec"  # Light Foreground
+base07: "ffffff"  # Light Background (tabs / active) — pure white
+
+# --- Accents (earth + sky) ---
+base08: "d47a52"  # Red — terracotta
+base09: "dd9a55"  # Orange — clay
+base0A: "d9c078"  # Yellow — sand
+base0B: "a3b56a"  # Green — olive moss
+base0C: "7fb8a2"  # Cyan — seafoam sage
+base0D: "82b4d8"  # Blue — dusty sky
+base0E: "b394ad"  # Purple — muted mauve
+base0F: "8a6f52"  # Brown — bark

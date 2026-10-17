@@ -99,8 +99,8 @@ in
           };
 
           general = {
-            gaps_in = 15;
-            gaps_out = 12;
+            gaps_in = 0;
+            gaps_out = 0;
             border_size = 2;
             resize_on_border = true;
             allow_tearing = true;
@@ -109,7 +109,7 @@ in
           };
 
           decoration = {
-            rounding = 12;
+            rounding = 0;
             rounding_power = 2;
             active_opacity = 1;
             inactive_opacity = 0.90;
