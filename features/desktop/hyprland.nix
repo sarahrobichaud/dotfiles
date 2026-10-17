@@ -99,8 +99,8 @@ in
           };
 
           general = {
-            gaps_in = 0;
-            gaps_out = 0;
+            gaps_in = 20;
+            gaps_out = 20;
             border_size = 2;
             resize_on_border = true;
             allow_tearing = true;

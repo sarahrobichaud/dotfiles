@@ -2,7 +2,7 @@
 
 Manages my desktop and a slim WSL host profile, will add a laptop at some point :p
 
-![desktop](screenshots/desktop.png)
+![desktop](screenshots/desktop-2.png)
 
 ## Layout
 ```
