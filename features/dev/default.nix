@@ -19,6 +19,16 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    # Local dev service names; /etc/hosts wins over mDNS/LAN resolver lookups.
+    networking.hosts = {
+      "127.0.0.1" = [
+        "pantry.local"
+        "mail.local"
+        "api.local"
+        "tournament.local"
+      ];
+    };
+
     environment.systemPackages =
       (with pkgs; [
         neovim
